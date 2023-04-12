@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.BLL", "EcoActive.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.DAL", "EcoActive.DAL\EcoActive.DAL.csproj", "{613AF6E4-AB9B-47E9-A99B-A46E6854D697}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.Utility", "EcoActive.Utility\EcoActive.Utility.csproj", "{C476D486-CD91-45AE-B588-6529BB0E3013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C476D486-CD91-45AE-B588-6529BB0E3013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C476D486-CD91-45AE-B588-6529BB0E3013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C476D486-CD91-45AE-B588-6529BB0E3013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C476D486-CD91-45AE-B588-6529BB0E3013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using EcoActive.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcoActive.DAL.Migrations
 {
     [DbContext(typeof(EcoActiveDbContext))]
-    partial class EcoActiveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230412173630_AddCustomRole")]
+    partial class AddCustomRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,7 +198,7 @@ namespace EcoActive.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaseUsers");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("EcoActive.DAL.Identity.ApplicationUser", b =>
