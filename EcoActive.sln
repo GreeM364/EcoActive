@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.API", "EcoActive\EcoActive.API.csproj", "{77B21BF8-0B1C-4F0B-8038-9EFE2829D3C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.BLL", "EcoActive.BLL\EcoActive.BLL.csproj", "{A79DDBF2-8A2F-4696-B1DC-9AEBAB45FD89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoActive.DAL", "EcoActive.DAL\EcoActive.DAL.csproj", "{613AF6E4-AB9B-47E9-A99B-A46E6854D697}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{77B21BF8-0B1C-4F0B-8038-9EFE2829D3C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77B21BF8-0B1C-4F0B-8038-9EFE2829D3C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77B21BF8-0B1C-4F0B-8038-9EFE2829D3C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A79DDBF2-8A2F-4696-B1DC-9AEBAB45FD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79DDBF2-8A2F-4696-B1DC-9AEBAB45FD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A79DDBF2-8A2F-4696-B1DC-9AEBAB45FD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A79DDBF2-8A2F-4696-B1DC-9AEBAB45FD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{613AF6E4-AB9B-47E9-A99B-A46E6854D697}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
