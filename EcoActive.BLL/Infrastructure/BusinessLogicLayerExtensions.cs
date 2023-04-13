@@ -21,6 +21,7 @@ namespace EcoActive.BLL.Infrastructure
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IFactoryService, FactoryService>();
             services.AddScoped<IFactoryAdministratorService, FactoryAdministratorService>();
+            services.AddScoped<ILoginService, LoginService>();
 
             return services;
         }
