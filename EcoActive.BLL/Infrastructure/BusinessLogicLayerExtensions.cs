@@ -16,12 +16,14 @@ namespace EcoActive.BLL.Infrastructure
             services.AddAutoMapper(typeof(EmployeeProfile));
             services.AddAutoMapper(typeof(FactoryProfile));
             services.AddAutoMapper(typeof(FactoryAdministratorProfile));
+            services.AddAutoMapper(typeof(UserProfile));
 
             services.AddScoped<IActivistService, ActivistService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IFactoryService, FactoryService>();
             services.AddScoped<IFactoryAdministratorService, FactoryAdministratorService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
