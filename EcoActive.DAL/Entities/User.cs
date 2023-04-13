@@ -11,7 +11,7 @@
         public DateTime BirthDate { get; set; }
 
         public FactoryAdmin? FactoryAdmin { get; set; }
-        public FactoryEmployee? FactoryEmployee { get; set; }
+        public Employee? Employee { get; set; }
         public Activist? Activist { get; set; }
     }
 }

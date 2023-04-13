@@ -1,6 +1,6 @@
 ﻿namespace EcoActive.DAL.Entities
 {
-    public class FactoryEmployee : BaseModel
+    public class Employee : BaseModel
     {
         public DateTime BeginningWorkingDay { get; set; }
         public DateTime EndWorkingDay { get; set; }
