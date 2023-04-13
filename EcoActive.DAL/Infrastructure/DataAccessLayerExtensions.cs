@@ -17,6 +17,7 @@ namespace EcoActive.DAL.Infrastructure
         public static IServiceCollection AddDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<EcoActiveDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddAutoMapper(typeof(ApplicationUserProfile));
 
             services.AddScoped<IActivistRepository, ActivistRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();

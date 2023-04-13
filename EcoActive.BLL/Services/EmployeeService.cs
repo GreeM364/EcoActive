@@ -10,11 +10,13 @@ namespace EcoActive.BLL.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IFactoryRepository _factoryRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper)
+        public EmployeeService(IEmployeeRepository employeeRepository, IFactoryRepository factoryRepository, IMapper mapper)
         {
             _employeeRepository = employeeRepository;
+            _factoryRepository = factoryRepository;
             _mapper = mapper;
         }
 
@@ -38,6 +40,9 @@ namespace EcoActive.BLL.Services
 
         public async Task<EmployeeDTO> CreateAsync(EmployeeCreateDTO request)
         {
+            if (await _factoryRepository.GetAsync(x => x.Id == request.FactoryId) == null)
+                throw new BadRequestException($"Factory with id {request.FactoryId} doesn't exist");
+
             var existing = await _employeeRepository.GetAsync(x => x.User.FirstName == request.FirstName
                                                                   && x.User.LastName == request.LastName
                                                                   && x.User.Phone == request.Phone);

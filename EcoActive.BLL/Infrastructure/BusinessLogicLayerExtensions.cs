@@ -13,8 +13,10 @@ namespace EcoActive.BLL.Infrastructure
         {
             services.AddDataAccessLayer(configuration);
             services.AddAutoMapper(typeof(EmployeeProfile));
+            services.AddAutoMapper(typeof(FactoryProfile));
 
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IFactoryService, FactoryService>();
 
             return services;
         }
