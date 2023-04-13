@@ -1,3 +1,4 @@
+using EcoActive.API;
 using EcoActive.BLL.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddBusinessLogicLayer(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(AutomapperAPIProfile));
 
 var app = builder.Build();
 
