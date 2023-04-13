@@ -19,6 +19,10 @@ namespace EcoActive.API
             CreateMap<FactoryAdministratorDTO, FactoryAdministratorViewModel>().ReverseMap();
             CreateMap<FactoryAdministratorCreateDTO, FactoryAdministratorCreateViewModel>().ReverseMap();
             CreateMap<FactoryAdministratorUpdateDTO, FactoryAdministratorUpdateViewModel>().ReverseMap();
+
+            CreateMap<ActivistDTO, ActivistViewModel>().ReverseMap();
+            CreateMap<ActivistCreateDTO, ActivistCreateViewModel>().ReverseMap();
+            CreateMap<ActivistUpdateDTO, ActivistUpdateViewModel>().ReverseMap();
         }
     }
 }
