@@ -5,6 +5,7 @@ using EcoActive.DAL.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using EcoActive.Utility;
+using EcoActive.DAL.Infrastructure;
 
 namespace EcoActive.DAL.Repository
 {
@@ -24,7 +25,6 @@ namespace EcoActive.DAL.Repository
         public async Task CreateAsync(Employee entity, string password)
         {
             entity.CreatedDate = DateTime.Now;
-            //TODO entity.CreatedBy 
 
             _db.FactoryEmployees.Add(entity);
             _db.BaseUsers.Add(entity.User);
@@ -42,7 +42,7 @@ namespace EcoActive.DAL.Repository
             }
             else
             {
-                throw new Exception("Error while creating Employee account"); // TODO: probably create IdentityException
+                throw new IdentityException("Error while creating Employee account");
             }
 
             await _db.SaveChangesAsync();
@@ -51,7 +51,6 @@ namespace EcoActive.DAL.Repository
         public async Task<Employee> UpdateAsync(Employee entity)
         {
             entity.LastModifiedDate = DateTime.Now;
-            //TODO entity.LastModifiedBy
 
             _db.FactoryEmployees.Update(entity);
 
