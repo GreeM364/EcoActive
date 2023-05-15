@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Braintree" Version="5.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EcoActive.DAL\EcoActive.DAL.csproj" />
   </ItemGroup>
 

@@ -3,11 +3,7 @@ using EcoActive.API.Models;
 using EcoActive.BLL.DataTransferObjects;
 using EcoActive.BLL.Exceptions;
 using EcoActive.BLL.Services.IServices;
-using EcoActive.DAL.Entities;
-using EcoActive.Utility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using System.Net;
 
 namespace EcoActive.API.Controllers
@@ -169,6 +165,69 @@ namespace EcoActive.API.Controllers
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
 
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return _response;
+            }
+        }
+
+        [HttpGet("GetToken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<APIResponse>> GetToken()
+        {
+            try
+            {
+                var token = await _factoryService.GetToken();
+
+                _response.Result = _mapper.Map<ClientTokenViewModel>(token);
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return _response;
+            }
+        }
+
+        [HttpPatch("{id}/payment")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> AddPaySubscription(string id, [FromBody] PaymentNonceViewModel request)
+        {
+            try
+            {
+                var paymentNonce = _mapper.Map<PaymentNonceDTO>(request);
+                await _factoryService.PaySubscription(id, paymentNonce);
+
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (BadRequestException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return BadRequest(_response);
             }
             catch (NotFoundException ex)
             {

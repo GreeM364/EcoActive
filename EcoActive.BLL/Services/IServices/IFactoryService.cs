@@ -9,6 +9,8 @@ namespace EcoActive.BLL.Services.IServices
         public Task<FactoryDTO> CreateAsync(FactoryCreateDTO request);
         public Task<FactoryDTO> UpdateAsync(string id, FactoryUpdateDTO request);
         public Task DeleteAsync(string id);
+        public Task<ClientTokenDTO> GetToken();
+        public Task PaySubscription(string id, PaymentNonceDTO nonceDTO);
         public Task<List<EmployeeDTO>> GetEmployeesAsync(string id);
         public Task<List<FactoryAdministratorDTO>> GetFactoryAdministratorsAsync(string id);
         public Task<ActivistDTO> GetActivistAsync(string id);

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Braintree;
+using EcoActive.BLL.BrainTree;
 using EcoActive.BLL.DataTransferObjects;
 using EcoActive.BLL.Exceptions;
 using EcoActive.BLL.Services.IServices;
@@ -13,16 +15,18 @@ namespace EcoActive.BLL.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IFactoryAdminRepository _factoryAdminRepository;
         private readonly IActivistRepository _activistRepository;
+        public readonly IBrainTreeGate _brainTreeGate;
         private readonly IMapper _mapper;
 
         public FactoryService(IFactoryRepository factoryRepository, IEmployeeRepository employeeRepository,
                              IFactoryAdminRepository factoryAdminRepository, IActivistRepository activistRepository,
-                             IMapper mapper)
+                             IBrainTreeGate brainTreeGate, IMapper mapper)
         {
             _factoryRepository = factoryRepository;
             _employeeRepository = employeeRepository;
             _factoryAdminRepository = factoryAdminRepository;
             _activistRepository = activistRepository;
+            _brainTreeGate = brainTreeGate;
             _mapper = mapper;
         }
 
@@ -96,6 +100,47 @@ namespace EcoActive.BLL.Services
 
             await _factoryRepository.RemoveAsync(factory);
         }
+
+        public async Task<ClientTokenDTO> GetToken()
+        {
+            var gateway = _brainTreeGate.GetGateway();
+            var clientToken = await gateway.ClientToken.GenerateAsync();
+
+            return new ClientTokenDTO { ClientToken = clientToken };
+        }
+
+        public async Task PaySubscription(string id, PaymentNonceDTO nonceDTO)
+        {
+            var factory = await _factoryRepository.GetAsync(x => x.Id == id);
+
+            if (factory == null)
+                throw new NotFoundException($"Factory with such id {id} not found");
+
+            var request = new TransactionRequest
+            {
+                Amount = 1000,
+                PaymentMethodNonce = nonceDTO.PaymentNonce,
+                OrderId = Guid.NewGuid().ToString(),
+                Options = new TransactionOptionsRequest
+                {
+                    SubmitForSettlement = true
+                }
+            };
+
+            var gateway = _brainTreeGate.GetGateway();
+            Result<Transaction> result = gateway.Transaction.Sale(request);
+
+            if (result.IsSuccess())
+            {
+                factory.DataPaySubscription = DateTime.Today;
+                await _factoryRepository.UpdateAsync(factory);
+            }
+            else
+            {
+                throw new BadRequestException($"An error occurred while paying for the subscription");
+            }
+        }
+
 
         public async Task<List<EmployeeDTO>> GetEmployeesAsync(string id)
         {

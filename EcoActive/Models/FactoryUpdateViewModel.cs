@@ -14,5 +14,7 @@ namespace EcoActive.API.Models
 
         [Required]
         public string Type { get; set; } = null!;
+
+        public DateTime DataPaySubscription { get; set; }
     }
 }

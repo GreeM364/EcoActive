@@ -30,6 +30,9 @@ namespace EcoActive.API
             CreateMap<ProfileDTO, ProfileViewModel>().ReverseMap();
 
             CreateMap<AddFactoryToActivistDTO, AddFactoryToActivistViewModel>().ReverseMap();
+
+            CreateMap<ClientTokenDTO, ClientTokenViewModel>().ReverseMap();
+            CreateMap<PaymentNonceDTO, PaymentNonceViewModel>().ReverseMap();
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using EcoActive.BLL.Services.IServices;
 using EcoActive.BLL.Services;
 using EcoActive.BLL.Mappings;
+using EcoActive.BLL.BrainTree;
 
 namespace EcoActive.BLL.Infrastructure
 {
@@ -24,6 +25,9 @@ namespace EcoActive.BLL.Infrastructure
             services.AddScoped<IFactoryAdministratorService, FactoryAdministratorService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.Configure<BrainTreeSettings>(configuration.GetSection("BrainTree"));
+            services.AddSingleton<IBrainTreeGate, BrainTreeGate>();
 
             return services;
         }
