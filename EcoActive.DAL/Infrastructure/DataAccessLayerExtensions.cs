@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using EcoActive.DAL.Initializer;
 
 namespace EcoActive.DAL.Infrastructure
 {
@@ -29,12 +30,13 @@ namespace EcoActive.DAL.Infrastructure
                    .AddEntityFrameworkStores<EcoActiveDbContext>()
                    .AddDefaultTokenProviders();
 
+            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.BuildServiceProvider().GetService<IDbInitializer>()!.Initialize();
+
             services.AddTransient<IdentityInitializer>();
             services.BuildServiceProvider().GetService<IdentityInitializer>().InitializeRolesAsync();
 
             services.AddScoped<RoleManager<ApplicationRole>>();
-
-            services.AddSingleton<IConfiguration>(configuration);
 
 
             services.AddScoped<JwtHandler>();
