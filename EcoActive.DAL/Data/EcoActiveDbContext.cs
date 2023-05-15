@@ -15,6 +15,8 @@ namespace EcoActive.DAL.Data
         public DbSet<Employee> FactoryEmployees { get; set; }
         public DbSet<Activist> Activists { get; set;}
         public DbSet<ApplicationRole> Roles { get; set; }
+        public DbSet<EnvironmentalIndicators> EnvironmentalIndicators { get; set; }
+        public DbSet<CriticalIndicators> CriticalIndicators { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

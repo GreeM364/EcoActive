@@ -24,7 +24,6 @@ namespace EcoActive.DAL.Repository
         public async Task CreateAsync(Employee entity, string password)
         {
             entity.CreatedDate = DateTime.Now;
-            //TODO entity.CreatedBy 
 
             _db.FactoryEmployees.Add(entity);
             _db.BaseUsers.Add(entity.User);
@@ -51,7 +50,6 @@ namespace EcoActive.DAL.Repository
         public async Task<Employee> UpdateAsync(Employee entity)
         {
             entity.LastModifiedDate = DateTime.Now;
-            //TODO entity.LastModifiedBy
 
             _db.FactoryEmployees.Update(entity);
 

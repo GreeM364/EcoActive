@@ -4,27 +4,28 @@ using EcoActive.DAL.Repository.IRepository;
 
 namespace EcoActive.DAL.Repository
 {
-    public class FactoryRepository : Repository<Factory>, IFactoryRepository
+    public class EnvironmentalIndicatorsRepository : Repository<EnvironmentalIndicators>, IEnvironmentalIndicatorsRepository
     {
         private readonly EcoActiveDbContext _db;
-        public FactoryRepository(EcoActiveDbContext db) : base(db)
+        public EnvironmentalIndicatorsRepository(EcoActiveDbContext db) : base(db)
         {
             _db = db;
         }
-        public async Task CreateAsync(Factory entity)
+
+        public async Task CreateAsync(EnvironmentalIndicators entity)
         {
             entity.CreatedDate = DateTime.Now;
 
-            _db.Factories.Add(entity);
+            _db.EnvironmentalIndicators.Add(entity);
 
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Factory> UpdateAsync(Factory entity)
+        public async Task<EnvironmentalIndicators> UpdateAsync(EnvironmentalIndicators entity)
         {
             entity.LastModifiedDate = DateTime.Now;
 
-            _db.Factories.Update(entity);
+            _db.EnvironmentalIndicators.Update(entity);
 
             await _db.SaveChangesAsync();
             return entity;
