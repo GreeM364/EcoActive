@@ -178,6 +178,104 @@ namespace EcoActive.API.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.ToString() };
+                return _response;
+            }
+        }
+
+        [HttpGet("{id}/factories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> GetFactories(string id)
+        {
+            try
+            {
+                var factories = await _activistService.GetFactoriesAsync(id);
+
+                _response.Result = _mapper.Map<List<FactoryViewModel>>(factories);
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return _response;
+            }
+        }
+
+        [HttpPatch("{id}/add-factory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> AddFactoryToActivist(string id, [FromBody] AddFactoryToActivistViewModel request)
+        {
+            try
+            {
+                var patientToDoctortDTO = _mapper.Map<AddFactoryToActivistDTO>(request);
+                await _activistService.AddFactoryToActivistAsync(id, patientToDoctortDTO);
+
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return _response;
+            }  
+        }
+
+        [HttpPatch("{factoryId}/delete-factory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> DeleteFactoryToActivist(string factoryId)
+        {
+            try
+            {
+                await _activistService.DeleteFactoryToActivistAsync(factoryId);
+
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
 
                 return _response;
             }

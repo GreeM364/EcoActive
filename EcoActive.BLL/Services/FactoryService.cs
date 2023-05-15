@@ -11,13 +11,18 @@ namespace EcoActive.BLL.Services
     {
         private readonly IFactoryRepository _factoryRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IFactoryAdminRepository _factoryAdminRepository;
+        private readonly IActivistRepository _activistRepository;
         private readonly IMapper _mapper;
 
         public FactoryService(IFactoryRepository factoryRepository, IEmployeeRepository employeeRepository,
-                              IMapper mapper)
+                             IFactoryAdminRepository factoryAdminRepository, IActivistRepository activistRepository,
+                             IMapper mapper)
         {
             _factoryRepository = factoryRepository;
             _employeeRepository = employeeRepository;
+            _factoryAdminRepository = factoryAdminRepository;
+            _activistRepository = activistRepository;
             _mapper = mapper;
         }
 
@@ -102,6 +107,33 @@ namespace EcoActive.BLL.Services
 
             var employee = _mapper.Map<List<EmployeeDTO>>(source);
             return employee;
+        }
+
+        public async Task<List<FactoryAdministratorDTO>> GetFactoryAdministratorsAsync(string id)
+        {
+            if (await _factoryRepository.GetAsync(x => x.Id == id) == null)
+                throw new NotFoundException($"Factory with such id {id} not found");
+
+            var source = await _factoryAdminRepository.GetAllAsync(x => x.FactoryId == id, includeProperties: "User",
+                                                                   isTracking: false);
+
+            var employee = _mapper.Map<List<FactoryAdministratorDTO>>(source);
+            return employee;
+        }
+
+        public async Task<ActivistDTO> GetActivistAsync(string id)
+        {
+            var factory = await _factoryRepository.GetAsync(x => x.Id == id);
+            if (factory == null)
+                throw new NotFoundException($"Factory with id {id} not found");
+
+            var source = await _activistRepository.GetAsync(x => x.Id == factory.ActivistId,
+                                                            includeProperties: "User", isTracking: false);
+            if (source == null)
+                return new ActivistDTO();
+
+            var result = _mapper.Map<ActivistDTO>(source);
+            return result;
         }
     }
 }

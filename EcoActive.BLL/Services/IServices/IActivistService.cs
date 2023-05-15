@@ -9,5 +9,8 @@ namespace EcoActive.BLL.Services.IServices
         Task<ActivistDTO> CreateAsync(ActivistCreateDTO request);
         Task<ActivistDTO> UpdateAsync(string id, ActivistUpdateDTO request);
         Task DeleteAsync(string id);
+        Task<List<FactoryDTO>> GetFactoriesAsync(string id);
+        Task AddFactoryToActivistAsync(string activistId, AddFactoryToActivistDTO request);
+        Task DeleteFactoryToActivistAsync(string factoryId);
     }
 }

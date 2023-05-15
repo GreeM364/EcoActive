@@ -4,7 +4,10 @@ using EcoActive.BLL.DataTransferObjects;
 using EcoActive.BLL.Exceptions;
 using EcoActive.BLL.Services.IServices;
 using EcoActive.DAL.Entities;
+using EcoActive.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Net;
 
 namespace EcoActive.API.Controllers
@@ -211,6 +214,72 @@ namespace EcoActive.API.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return _response;
+            }
+        }
+
+        [HttpGet("{id}/administrator")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> GetFactoryAdministrators(string id)
+        {
+            try
+            {
+                var administrators = await _factoryService.GetFactoryAdministratorsAsync(id);
+
+                _response.Result = _mapper.Map<List<FactoryAdministratorViewModel>>(administrators);
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+
+                return _response;
+            }
+        }
+
+        [HttpGet("{id}/activist")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> GetFactoryActivist(string id)
+        {
+            try
+            {
+                var activist = await _factoryService.GetActivistAsync(id);
+
+                _response.Result = _mapper.Map<ActivistViewModel>(activist);
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+
+            }
+            catch (NotFoundException ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages = new List<string> { ex.Message };
+
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
 
                 return _response;
             }

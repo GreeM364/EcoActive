@@ -10,11 +10,14 @@ namespace EcoActive.BLL.Services
     public class ActivistService : IActivistService
     {
         private readonly IActivistRepository _activistRepository;
+        private readonly IFactoryRepository _factoryRepository;
         private readonly IMapper _mapper;
 
-        public ActivistService(IActivistRepository activistRepository, IMapper mapper)
+        public ActivistService(IActivistRepository activistRepository, IFactoryRepository factoryRepository,
+                               IMapper mapper)
         {
             _activistRepository = activistRepository;
+            _factoryRepository = factoryRepository;
             _mapper = mapper;
         }
 
@@ -78,6 +81,42 @@ namespace EcoActive.BLL.Services
                 throw new NotFoundException($"Activist with such id {id} not found for deletion");
 
             await _activistRepository.RemoveAsync(activist);
+        }
+
+        public async Task<List<FactoryDTO>> GetFactoriesAsync(string id)
+        {
+            if (await _activistRepository.GetAsync(x => x.Id == id) == null)
+                throw new NotFoundException($"Activist with such id {id} not found");
+
+            var source = await _factoryRepository.GetAllAsync(x => x.ActivistId == id);
+
+            var result = _mapper.Map<List<FactoryDTO>>(source);
+            return result;
+        }
+
+        public async Task AddFactoryToActivistAsync(string activistId, AddFactoryToActivistDTO request)
+        {
+            var factory = await _factoryRepository.GetByIdAsync(request.FactoryId);
+
+            if (factory == null)
+                throw new NotFoundException($"Factory with id {request.FactoryId} not found");
+
+            if (await _activistRepository.GetAsync(x => x.Id == activistId) == null)
+                throw new NotFoundException($"Activist with id {activistId} not found");
+
+            factory.ActivistId = activistId;
+            await _factoryRepository.UpdateAsync(factory);
+        }
+
+        public async Task DeleteFactoryToActivistAsync(string factoryId)
+        {
+            var factory = await _factoryRepository.GetByIdAsync(factoryId);
+
+            if (factory == null)
+                throw new NotFoundException($"Factory with id {factoryId} not found");
+
+            factory.ActivistId = null;
+            await _factoryRepository.UpdateAsync(factory);
         }
     }
 }
