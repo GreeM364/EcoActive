@@ -2,7 +2,6 @@
 using EcoActive.DAL.Data;
 using EcoActive.DAL.Entities;
 using EcoActive.DAL.Identity;
-using EcoActive.DAL.Infrastructure;
 using EcoActive.DAL.Repository.IRepository;
 using EcoActive.Utility;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +23,7 @@ namespace EcoActive.DAL.Repository
         public async Task CreateAsync(FactoryAdmin entity, string password)
         {
             entity.CreatedDate = DateTime.Now;
+            //TODO entity.CreatedBy 
 
             _db.FactoryAdmins.Add(entity);
             _db.BaseUsers.Add(entity.User);
@@ -41,7 +41,7 @@ namespace EcoActive.DAL.Repository
             }
             else
             {
-                throw new IdentityException("Error while creating Factory Admin account");
+                throw new Exception("Error while creating Factory Admin account"); // TODO: probably create IdentityException
             }
 
             await _db.SaveChangesAsync();
@@ -50,6 +50,7 @@ namespace EcoActive.DAL.Repository
         public async Task<FactoryAdmin> UpdateAsync(FactoryAdmin entity)
         {
             entity.LastModifiedDate = DateTime.Now;
+            //TODO entity.LastModifiedBy
 
             _db.FactoryAdmins.Update(entity);
 

@@ -14,6 +14,7 @@ namespace EcoActive.DAL.Repository
         public async Task CreateAsync(Factory entity)
         {
             entity.CreatedDate = DateTime.Now;
+            //TODO entity.CreatedBy 
 
             _db.Factories.Add(entity);
 
@@ -23,6 +24,7 @@ namespace EcoActive.DAL.Repository
         public async Task<Factory> UpdateAsync(Factory entity)
         {
             entity.LastModifiedDate = DateTime.Now;
+            //TODO entity.LastModifiedBy
 
             _db.Factories.Update(entity);
 
