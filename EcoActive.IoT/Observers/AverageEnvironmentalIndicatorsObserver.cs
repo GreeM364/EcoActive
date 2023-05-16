@@ -24,13 +24,13 @@ namespace EcoActive.IoT.Observers
             if (message.Topic == "test/topic2")
             {
                 using var scope = _serviceScopeFactory.CreateScope();
-                var _environmentalIndicatorsService = scope.ServiceProvider.GetRequiredService<IEnvironmentalIndicatorsService>();
+                var environmentalIndicatorsService = scope.ServiceProvider.GetRequiredService<IEnvironmentalIndicatorsService>();
 
                 var payload = Encoding.UTF8.GetString(message.Payload);
-                var physicalCondition = JsonConvert.DeserializeObject<AverageEnvironmentalIndicators>(payload);
+                var environmentalIndicators = JsonConvert.DeserializeObject<AverageEnvironmentalIndicators>(payload);
 
-                var physicalConditionDTO = _mapper.Map<EnvironmentalIndicatorsCreateDTO>(physicalCondition);
-                await _environmentalIndicatorsService.CreateAsync(physicalConditionDTO);
+                var environmentalIndicatorsDTO = _mapper.Map<EnvironmentalIndicatorsCreateDTO>(environmentalIndicators);
+                await environmentalIndicatorsService.CreateAsync(environmentalIndicatorsDTO);
             }
         }
     }

@@ -48,9 +48,9 @@ namespace EcoActive.IoT.Observers
 
         private async Task Send(IServiceScope scope, CriticalEnvironmentalIndicators criticalEnvironmental)
         {
-            var _factoryService = scope.ServiceProvider.GetRequiredService<IFactoryService>();
-            var activist = await _factoryService.GetActivistAsync(criticalEnvironmental.FactoryId);
-            var employees = await _factoryService.GetEmployeesAsync(criticalEnvironmental.FactoryId);
+            var factoryService = scope.ServiceProvider.GetRequiredService<IFactoryService>();
+            var activist = await factoryService.GetActivistAsync(criticalEnvironmental.FactoryId);
+            var employees = await factoryService.GetEmployeesAsync(criticalEnvironmental.FactoryId);
 
             await _hub.Clients.All.SendAsync("CriticalEnvironmental", criticalEnvironmental);
         }

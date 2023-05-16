@@ -7,8 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
+    <PackageReference Include="MQTTnet" Version="4.2.0.706" />
+    <PackageReference Include="MQTTnet.AspNetCore" Version="4.2.0.706" />
+    <PackageReference Include="MQTTnet.Extensions.ManagedClient" Version="4.2.0.706" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EcoActive.BLL\EcoActive.BLL.csproj" />
   </ItemGroup>
 
 </Project>

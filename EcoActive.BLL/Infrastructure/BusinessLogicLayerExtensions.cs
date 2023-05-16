@@ -18,6 +18,8 @@ namespace EcoActive.BLL.Infrastructure
             services.AddAutoMapper(typeof(FactoryProfile));
             services.AddAutoMapper(typeof(FactoryAdministratorProfile));
             services.AddAutoMapper(typeof(UserProfile));
+            services.AddAutoMapper(typeof(CriticalIndicatorsProfile));
+            services.AddAutoMapper(typeof(EnvironmentalIndicatorsProfile));
 
             services.AddScoped<IActivistService, ActivistService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
@@ -25,6 +27,8 @@ namespace EcoActive.BLL.Infrastructure
             services.AddScoped<IFactoryAdministratorService, FactoryAdministratorService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICriticalIndicatorsService, CriticalIndicatorsService>();
+            services.AddScoped<IEnvironmentalIndicatorsService, EnvironmentalIndicatorsService>();
 
             services.Configure<BrainTreeSettings>(configuration.GetSection("BrainTree"));
             services.AddSingleton<IBrainTreeGate, BrainTreeGate>();

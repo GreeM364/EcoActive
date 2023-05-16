@@ -24,16 +24,15 @@ namespace EcoActive.IoT.Observers
             if (message.Topic == "test/topic1")
             {
                 using var scope = _serviceScopeFactory.CreateScope();
-                var _factoryService = scope.ServiceProvider.GetRequiredService<IFactoryService>();
-
+                var factoryService = scope.ServiceProvider.GetRequiredService<IFactoryService>();
 
                 var payload = Encoding.UTF8.GetString(message.Payload);
-                var environmentalIndicators = JsonConvert.DeserializeObject<RealTimeEnvironmentalIndicators>(payload)!;
+                var realTimeEnvironmentalIndicators = JsonConvert.DeserializeObject<RealTimeEnvironmentalIndicators>(payload)!;
 
-                var activist = await _factoryService.GetActivistAsync(environmentalIndicators.FactoryId);
-                var employees = await _factoryService.GetEmployeesAsync(environmentalIndicators.FactoryId);
+                var activist = await factoryService.GetActivistAsync(realTimeEnvironmentalIndicators.FactoryId);
+                var employees = await factoryService.GetEmployeesAsync(realTimeEnvironmentalIndicators.FactoryId);
 
-                await _hub.Clients.All.SendAsync("EnvironmentalIndicators", environmentalIndicators);
+                await _hub.Clients.All.SendAsync("EnvironmentalIndicators", realTimeEnvironmentalIndicators);
             }
         }
     }

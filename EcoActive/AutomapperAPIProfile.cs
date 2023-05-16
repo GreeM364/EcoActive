@@ -33,6 +33,10 @@ namespace EcoActive.API
 
             CreateMap<ClientTokenDTO, ClientTokenViewModel>().ReverseMap();
             CreateMap<PaymentNonceDTO, PaymentNonceViewModel>().ReverseMap();
+
+            CreateMap<EnvironmentalIndicatorsViewModel, EnvironmentalIndicatorsDTO>().ReverseMap();
+
+            CreateMap<CriticalIndicatorsViewModel, CriticalIndicatorsDTO>().ReverseMap();
         }
     }
 }

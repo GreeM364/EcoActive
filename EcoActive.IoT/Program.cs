@@ -4,14 +4,14 @@ using EcoActive.IoT.Hubs;
 using EcoActive.IoT.Observers;
 using EcoActive.IoT.Observers.IObservers;
 
+// Add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
+builder.Services.AddAutoMapper(typeof(AutomapperIoTProfile));
 builder.Services.AddBusinessLogicLayer(builder.Configuration);
 
 builder.Services.AddSingleton<IRealTimeEnvironmentalIndicatorsObserver, RealTimeEnvironmentalIndicatorsObserver>();
@@ -19,9 +19,9 @@ builder.Services.AddSingleton<IAverageEnvironmentalIndicatorsObserver, AverageEn
 builder.Services.AddSingleton<ICriticalIndicatorsObserver, CriticalIndicatorsObserver>();
 builder.Services.AddHostedService<MqttService>();
 
-var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

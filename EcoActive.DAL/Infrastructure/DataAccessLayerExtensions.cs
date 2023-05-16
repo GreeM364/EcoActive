@@ -25,6 +25,8 @@ namespace EcoActive.DAL.Infrastructure
             services.AddScoped<IFactoryAdminRepository, FactoryAdminRepository>();
             services.AddScoped<IFactoryRepository, FactoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICriticalIndicatorsRepository, CriticalIndicatorsRepository>();
+            services.AddScoped<IEnvironmentalIndicatorsRepository, EnvironmentalIndicatorsRepository>();
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                    .AddEntityFrameworkStores<EcoActiveDbContext>()
