@@ -33,19 +33,44 @@ namespace EcoActive.BLL.Services
         public async Task<FactoryDTO> GetByIdAsync(string id)
         {
             var source = await _factoryRepository.GetByIdAsync(id);
+            var employeesCount = await _employeeRepository.GetAllAsync(e => e.FactoryId == id);
+            var factoryAdminsCount = await _factoryAdminRepository.GetAllAsync(a => a.FactoryId == id);
 
             if (source == null)
             {
                 throw new NotFoundException($"Factory with id {id} not found");
             }
 
-            return _mapper.Map<FactoryDTO>(source);
+            var factoryDTO = _mapper.Map<FactoryDTO>(source);
+            factoryDTO.EmployeesCount = employeesCount.Count();
+            factoryDTO.FactoryAdminsCount = factoryAdminsCount.Count();
+
+            return factoryDTO;
         }
 
         public async Task<List<FactoryDTO>> GetAsync()
         {
             var source = await _factoryRepository.GetAllAsync();
-            return _mapper.Map<List<FactoryDTO>>(source);
+            var factoriesDTO = _mapper.Map<List<FactoryDTO>>(source);
+
+            factoriesDTO = factoriesDTO.Select(async f =>
+            {
+                var employeesCount = (await _employeeRepository.GetAllAsync(e => e.FactoryId == f.Id)).Count();
+                var factoryAdminsCount = (await _factoryAdminRepository.GetAllAsync(a => a.FactoryId == f.Id)).Count();
+                return new FactoryDTO
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Type = f.Type,
+                    Territory = f.Territory,
+                    ActivistId = f.ActivistId,
+                    DataPaySubscription = f.DataPaySubscription,
+                    EmployeesCount = employeesCount,
+                    FactoryAdminsCount = factoryAdminsCount
+                };
+            }).Select(t => t.Result).ToList();
+
+            return factoriesDTO;
         }
 
         public async Task<FactoryDTO> CreateAsync(FactoryCreateDTO request)
