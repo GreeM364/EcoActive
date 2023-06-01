@@ -40,20 +40,18 @@ namespace EcoActive.DAL.Repository
             }
             else
             {
-                throw new Exception("Error while creating Factory Admin account"); // TODO: probably create IdentityException
+                throw new Exception("Error while creating Factory Admin account"); 
             }
 
             await _db.SaveChangesAsync();
         }
 
-        public async Task<FactoryAdmin> UpdateAsync(FactoryAdmin entity)
+        public override async Task RemoveAsync(FactoryAdmin entity)
         {
-            entity.LastModifiedDate = DateTime.Now;
-
-            _db.FactoryAdmins.Update(entity);
+            _db.BaseUsers.Remove(entity.User);
+            _db.FactoryAdmins.Remove(entity);
 
             await _db.SaveChangesAsync();
-            return entity;
         }
     }
 }

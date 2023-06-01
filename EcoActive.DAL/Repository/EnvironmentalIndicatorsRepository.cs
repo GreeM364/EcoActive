@@ -20,15 +20,5 @@ namespace EcoActive.DAL.Repository
 
             await _db.SaveChangesAsync();
         }
-
-        public async Task<EnvironmentalIndicators> UpdateAsync(EnvironmentalIndicators entity)
-        {
-            entity.LastModifiedDate = DateTime.Now;
-
-            _db.EnvironmentalIndicators.Update(entity);
-
-            await _db.SaveChangesAsync();
-            return entity;
-        }
     }
 }

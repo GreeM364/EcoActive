@@ -14,20 +14,11 @@ namespace EcoActive.DAL.Repository
         public async Task CreateAsync(Factory entity)
         {
             entity.CreatedDate = DateTime.Now;
+            entity.DataPaySubscription = DateTime.Today;
 
             _db.Factories.Add(entity);
 
             await _db.SaveChangesAsync();
-        }
-
-        public async Task<Factory> UpdateAsync(Factory entity)
-        {
-            entity.LastModifiedDate = DateTime.Now;
-
-            _db.Factories.Update(entity);
-
-            await _db.SaveChangesAsync();
-            return entity;
         }
     }
 }

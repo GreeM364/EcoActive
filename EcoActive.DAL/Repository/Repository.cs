@@ -70,7 +70,17 @@ namespace EcoActive.DAL.Repository
             return dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task RemoveAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
+        {
+            entity.LastModifiedDate = DateTime.Now;
+
+            dbSet.Update(entity);
+
+            await SaveAsync();
+            return entity;
+        }
+
+        public virtual async Task RemoveAsync(T entity)
         {
             dbSet.Remove(entity);
             await SaveAsync();

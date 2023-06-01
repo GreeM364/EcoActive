@@ -33,7 +33,7 @@ namespace EcoActive.IoT.Observers
                 var payload = Encoding.UTF8.GetString(message.Payload);
                 var criticalEnvironmental = JsonConvert.DeserializeObject<CriticalEnvironmentalIndicators>(payload)!;
 
-                await Send(scope, criticalEnvironmental);
+                await Send(criticalEnvironmental);
                 await Save(scope, criticalEnvironmental);
             }
         }
@@ -46,13 +46,9 @@ namespace EcoActive.IoT.Observers
             await criticalIndicatorsService.CreateAsync(criticalIndicatorsDTO);
         }
 
-        private async Task Send(IServiceScope scope, CriticalEnvironmentalIndicators criticalEnvironmental)
+        private async Task Send(CriticalEnvironmentalIndicators criticalEnvironmental)
         {
-            var factoryService = scope.ServiceProvider.GetRequiredService<IFactoryService>();
-            var activist = await factoryService.GetActivistAsync(criticalEnvironmental.FactoryId);
-            var employees = await factoryService.GetEmployeesAsync(criticalEnvironmental.FactoryId);
-
-            await _hub.Clients.All.SendAsync("CriticalEnvironmental", criticalEnvironmental);
+            await _hub.Clients.Group($"{criticalEnvironmental.FactoryId}").SendAsync("CriticalIndicators", criticalEnvironmental);
         }
     }
 }

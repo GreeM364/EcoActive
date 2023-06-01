@@ -57,7 +57,7 @@ namespace EcoActive.BLL.Services
 
         public async Task<ActivistDTO> UpdateAsync(string id, ActivistUpdateDTO request)
         {
-            var updateEntity = await _activistRepository.GetByIdAsync(id);
+            var updateEntity = await _activistRepository.GetAsync(a => a.Id == id, "User"); 
 
             if (request == null)
                 throw new BadRequestException("The received model of Activist is null");

@@ -41,20 +41,18 @@ namespace EcoActive.DAL.Repository
             }
             else
             {
-                throw new Exception("Error while creating Activist account"); // TODO: probably create IdentityException
+                throw new Exception("Error while creating Activist account");
             }
 
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Activist> UpdateAsync(Activist entity)
+        public override async Task RemoveAsync(Activist entity)
         {
-            entity.LastModifiedDate = DateTime.Now;
-
-            _db.Activists.Update(entity);
+            _db.BaseUsers.Remove(entity.User);
+            _db.Activists.Remove(entity);
 
             await _db.SaveChangesAsync();
-            return entity;
         }
     }
 }

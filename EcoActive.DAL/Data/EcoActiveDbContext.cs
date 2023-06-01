@@ -24,6 +24,7 @@ namespace EcoActive.DAL.Data
 
             modelBuilder.ApplyConfiguration(new ApplicationRoleConfiguration());
             modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
+            modelBuilder.ApplyConfiguration(new ActivistConfiguration());
         }
 
     }

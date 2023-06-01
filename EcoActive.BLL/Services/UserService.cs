@@ -18,7 +18,7 @@ namespace EcoActive.BLL.Services
         }
         public async Task<ProfileDTO> GetProfileAsync(string userId)
         {
-            var source = await _userRepository.GetByIdAsync(userId);
+            var source = await _userRepository.GetAsync(userId, "FactoryAdmin,Employee,Activist");
 
             if (source == null)
                 throw new NotFoundException($"User with id {userId} not found");

@@ -60,7 +60,7 @@ namespace EcoActive.BLL.Services
 
         public async Task<FactoryAdministratorDTO> UpdateAsync(string id, FactoryAdministratorUpdateDTO request)
         {
-            var updateEntity = await _factoryAdministratorRepository.GetByIdAsync(id);
+            var updateEntity = await _factoryAdministratorRepository.GetAsync(a => a.Id == id, "User");
 
             if (request == null)
                 throw new BadRequestException("The received model of Factory Administrator is null");
